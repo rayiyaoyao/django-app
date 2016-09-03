@@ -37,7 +37,6 @@ def populate():
 
 	for cat, cat_data in cats.iteritems():
 		c = add_cat(cat, cat_data["views"], cat_data["likes"])
-
 		for p in cat_data["pages"]:
 			add_page(c, p["title"], p["url"])
 
@@ -56,6 +55,7 @@ def add_cat(name, views, likes):
 	c = Category.objects.get_or_create(name = name)[0]
 	c.views = views
 	c.likes = likes
+#	c.slug = slug
 	c.save()
 	return c 
 
