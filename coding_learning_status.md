@@ -10,3 +10,11 @@
     - view： render detailpage
     - url： regular expressions to dynamicurls
     - template：corresponding modify
+
+20160904
+
+- exercise
+    - tango with django tutorial chapter 6 exercise
+    - finished official django tutorial part 1
+    - finished official django tutorial part 2
+    - finished official django tutorial part 3
