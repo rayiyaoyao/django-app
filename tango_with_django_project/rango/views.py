@@ -28,9 +28,10 @@ def index(request):
 	page_list = Page.objects.order_by('-views')[:5]
 	context_dict = {'categories': category_list, 'pages': page_list}
 
-	response = render(request, 'rango/index.html',  context_dict)
-	visitor_cookie_handler(request, response)
+	visitor_cookie_handler(request)
+	context_dict['visits'] = request.session['visits']
 
+	response = render(request, 'rango/index.html',  context_dict)
 	return response
 
 
@@ -151,21 +152,41 @@ def user_logout(request):
 	return HttpResponseRedirect(reverse('index'))
 
 
-#2 add cookie for visits counting
-def visitor_cookie_handler(request, response):
-	visits_cookie = int(request.COOKIES.get('visits', '1'))
+##2 add cookie for visits counting
+#3 def visitor_cookie_handler(request, response):
+#3 	visits_cookie = int(request.COOKIES.get('visits', '1'))
 
-	last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
+#3 	last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
+#3 	last_visit_time = datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S')
+
+#3 	if(datetime.now() - last_visit_time).days > 0 :
+#3 		visits = visits_cookie + 1
+#3 		response.set_cookie('last_visit', str(datetime.now()))
+#3 	else:
+#3 		visits = 1
+#3 		response.set_cookie('last_visit', last_visit_cookie)
+
+#3 	response.set_cookie('visits', visits)
+
+##3 update to session-based cookie for visits counting
+def get_server_side_cookie(request, cookie, default_val = None):
+	val = request.session.get(cookie)
+	if not val:
+		val = default_val
+	return val
+
+def visitor_cookie_handler(request):
+	visits = int(get_server_side_cookie(request, 'visits', '1'))
+	last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
 	last_visit_time = datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S')
 
-	if(datetime.now() - last_visit_time).days > 0 :
-		visits = visits_cookie + 1
-		response.set_cookie('last_visit', str(datetime.now()))
+	if (datetime.now() - last_visit_time).days > 0:
+		visits = visits + 1
+		request.session['last_visit'] = str(datetime.now())
 	else:
-		visits = 1
-		response.set_cookie('last_visit', last_visit_cookie)
+		request.session['last_visit'] = last_visit_cookie
 
-	response.set_cookie('visits', visits)
+	request.session['visits'] = visits
 
 
 
