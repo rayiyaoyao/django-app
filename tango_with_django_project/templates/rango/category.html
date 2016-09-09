@@ -1,13 +1,12 @@
 {% extends 'rango/base.html' %}
 
-{% block title_block %}
+{% block title %}
 	{{ category.name }}
 {% endblock %}
 
-{% block body_block %}
-<body>
+{% block body %}
 		{% if category %}
-			<h1>{{ category.name }}</h1>
+			<h1 >{{ category.name }}</h1>
 			{% if pages %}
 				<ul>
 					{% for page in pages %}

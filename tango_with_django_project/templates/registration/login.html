@@ -2,10 +2,10 @@
 {% load staticfiles %}
 
 {% block title %}
-Login
+Sign in
 {% endblock %}
 
-{% block body_block %}
+{% block body %}
 
 
 <link href="http://v4-alpha.getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
@@ -16,16 +16,16 @@ Login
 		<h2 class="form-signin-heading">Please sign in</h2>
 		<label for="inputUsername" class="sr-only">Username</label>
 		<input type="text" id="id_username" class="form-control" placeholder="Username" required autofocus>
+
 		<label for="inputPassword" class="sr-only">Password</label>
-		<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		<input type="password" id="id_Password" class="form-control" placeholder="Password" required>
+
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 	</form>
-	<p>
+	<p style="text-align: center;">
 		Not a member?
-		<a href="{% url 'registration_register' %}">Sign In</a>
+		<a href="{% url 'registration_register' %}">Sign up</a>
 	</p>
 </div>
 
 {% endblock %}
-
-
