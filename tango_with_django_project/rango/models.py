@@ -26,6 +26,8 @@ class Page(models.Model):
 	title = models.CharField(max_length = 128)
 	url = models.URLField()
 	views = models.IntegerField(default = 0)
+	first_visit = models.DateTimeField(auto_now = False, auto_now_add = True)
+	last_visit = models.DateTimeField(auto_now = True, auto_now_add = False)
 
 	def __str__(self):
 		return self.title

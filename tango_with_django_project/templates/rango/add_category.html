@@ -1,5 +1,7 @@
 {% extends 'rango/base.html' %}
 
+{% load bootstrap_toolkit %}
+
 {% block title %}
 	Add a Category
 {% endblock %}
@@ -9,7 +11,7 @@
 	
 		<form role = "form" id = "category_form" method = "post" action = "{% url 'add_category' %}">
 			{% csrf_token %}
-			{% for hidden in form.hidden_fields %}
+<!-- 			{% for hidden in form.hidden_fields %}
 				{{ hidden }}
 			{% endfor %}
 			{% for field in form.visible_fields %}
@@ -17,6 +19,8 @@
 				{{ field.help_text }}<br /><br />
 				{{ field }}<br />
 			{% endfor %}
+			<br /> -->
+			{{ form|as_bootstrap }}
 			<br />
 			<button class="btn btn-primary" type="submit" value="Create Categor">Create Category</button>
 			
